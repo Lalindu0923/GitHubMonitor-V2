@@ -12,6 +12,13 @@
   --accent-glow: rgba(59, 130, 246, 0.1);
   --purple-accent: #8b5cf6;
   
+  /* Additional layered palette */
+  --layer-1: rgba(59,130,246,0.06);
+  --layer-2: rgba(139,92,246,0.05);
+  --layer-3: rgba(16,185,129,0.04);
+  --soft-gradient-a: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(139,92,246,0.06) 50%, rgba(16,185,129,0.04) 100%);
+  --glass-bg: rgba(255,255,255,0.02);
+  
   --success-color: #10b981;
   --success-glow: rgba(16, 185, 129, 0.1);
   
@@ -50,6 +57,35 @@ body {
   background-attachment: fixed;
 }
 
+/* Layered decorative shapes behind the app for depth */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 1200px;
+  height: 600px;
+  top: -120px;
+  background: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.08), transparent 30%), radial-gradient(circle at 80% 60%, rgba(139,92,246,0.06), transparent 25%);
+  filter: blur(60px) saturate(110%);
+  opacity: 0.95;
+}
+
+body::after {
+  width: 1000px;
+  height: 420px;
+  bottom: -80px;
+  background: radial-gradient(circle at 70% 70%, rgba(16,185,129,0.06), transparent 25%), linear-gradient(90deg, rgba(59,130,246,0.02), rgba(139,92,246,0.02));
+  filter: blur(48px) saturate(105%);
+  opacity: 0.9;
+}
+
 .app-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -58,6 +94,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  position: relative;
+  z-index: 2; /* place content above decorative layers */
 }
 
 /* Header & Tabs */
@@ -474,6 +512,26 @@ h1 {
   background-color: #1e1e24;
 }
 
+/* Subtle layered accent stripe and depth for cards */
+.commit-card::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: -6px;
+  height: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background: var(--soft-gradient-a);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.commit-card {
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6), 0 2px 6px rgba(0,0,0,0.5), 0 0 30px var(--layer-1);
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
 .commit-card-header {
   display: flex;
   justify-content: space-between;
@@ -620,6 +678,31 @@ h1 {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
+}
+
+/* Layered header glow for the details panel */
+.analysis-viewer-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
+  background: linear-gradient(90deg, rgba(59,130,246,0.06) 0%, rgba(139,92,246,0.04) 50%, rgba(16,185,129,0.03) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.analysis-viewer-container { position: relative; z-index: 1; }
+
+/* A gentle glass card variant used for highlighted blocks */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  border-radius: 8px;
+  padding: 12px;
+  backdrop-filter: blur(6px);
 }
 
 .analysis-viewer-container h2 {
