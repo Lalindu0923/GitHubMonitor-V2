@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-load_dotenv("D:/SLT/AI/GitHubMonitor/Ai_Server/.env")
+load_dotenv("d:/SLT/AI/GitHubMonitor-v2/Ai_Server/.env")
 api_key = os.getenv("GEMINI_API_KEY")
 
 genai.configure(api_key=api_key)

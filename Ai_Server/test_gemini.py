@@ -13,9 +13,10 @@ if not api_key:
 else:
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model_name = os.getenv("MODEL") or "gemini-2.5-flash"
+        model = genai.GenerativeModel(model_name)
         response = model.generate_content("Review commit: 'Update app.py'. Return JSON with keys: score, verdict, summary, strengths, risks, suggestions.")
-        print("\nGemini Response OK:")
+        print(f"\nGemini Response OK (model={model_name}):")
         print(response.text)
     except Exception as e:
         print("\nGemini Request Failed:", e)
